@@ -1,0 +1,54 @@
+#############################
+#							#
+#	NETSIM UNIT TEST 8 		#
+# 							#
+# 	LYLE MULLER 			#
+# 	 						#
+# 	17 APRIL 2020 			#
+# 	PARAMETER SCANS 		#
+#							#
+#############################
+
+@N = 10000:100000:2
+K = 1000
+initiator = 0
+min_conduction_speed = .02
+max_conduction_speed = .02
+
+T = 1.0
+dt = 1e-4
+
+ge = 3.3276023360e-9
+gi = 8e-8
+taum = 20e-3
+vr = -70e-3
+vreset = -70e-3
+vth = -50e-3
+taur = 5e-3
+Ee = 0
+Ei = -80e-3
+taue = 5e-3
+taui = 5e-3
+El = -65e-3
+Ie = 0
+Cm = 200e-12
+sigma_space = .2e-3
+L = 1e-3
+connector = 2
+
+synapse_delay = 3e-4
+start_record_time = 0.0
+stop_record_time = 1.0
+bin_size = 100
+record_downsample_factor = 2
+
+$output_path = /media/lyle/test8
+
+vm_mean = -0.0680901
+vm_sigma = 0.0057296
+ge_mean = 1.14244e-08
+ge_sigma = 4.30869e-09
+gi_mean = 7.95233e-08
+gi_sigma = 5.80938e-08
+
+report_minutes = .5
