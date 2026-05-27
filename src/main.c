@@ -198,20 +198,27 @@ int main(int argc, char **argv) {
     rng = calloc(1, sizeof(struct rng_state));
     rng_init(rng, seed);
 
-    unsigned int conn_seed = p.simulation.connection_seed;
-    struct rng_state *conn_rng = NULL;
-    conn_rng = malloc(sizeof(struct rng_state));
-    rng_init(conn_rng, conn_seed);
+    #ifdef USE_SEPARATE_CONNECTOR_RNG
+        unsigned int conn_seed = p.simulation.connection_seed;
+        struct rng_state *conn_rng = NULL;
+        conn_rng = malloc(sizeof(struct rng_state));
+        rng_init(conn_rng, conn_seed);
+    #endif
 
     clock_t begin = clock();
 
     /* init network */
     struct output o;
     o.spike_count = 0;
-    assert(initialize_network(&p, network, rng) == NETSIM_NOERROR);
 
     /* make connections */
-    assert(connect_network(&p, network, conn_rng) == NETSIM_NOERROR);
+    assert(initialize_network(&p, network, rng) == NETSIM_NOERROR);
+
+    #ifdef USE_SEPARATE_CONNECTOR_RNG
+        assert(connect_network(&p, network, conn_rng) == NETSIM_NOERROR);
+    #else
+        assert(connect_network(&p, network, rng) == NETSIM_NOERROR);
+    #endif
 
     /* init external inputs*/
     assert(init_simulated_inputs(&p) == NETSIM_NOERROR);
@@ -279,7 +286,9 @@ int main(int argc, char **argv) {
     //
     free(network);
     free(rng);
+#ifdef USE_SEPARATE_CONNECTOR_RNG
     free(conn_rng);
+#endif
     free(file_path);
 
     //

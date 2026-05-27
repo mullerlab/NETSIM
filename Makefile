@@ -128,6 +128,11 @@ ifeq ($(SINGLE_NEURON_PERTURBATION),yes)
     CFLAGS += -DSINGLE_NEURON_PERTURBATION
 endif
 
+ifeq ($(USE_CONNECTOR_RNG),yes)
+    $(info Using separate connector RNG)
+    CFLAGS += -DUSE_SEPARATE_CONNECTOR_RNG
+endif
+
 #
 # library settings
 #
